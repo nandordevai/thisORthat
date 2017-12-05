@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <h1>D-side</h1>
+    <h1>this<span class="or">OR</span>that</h1>
     <router-view/>
   </div>
 </template>
@@ -12,6 +12,7 @@ export default {
 </script>
 
 <style>
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -20,4 +21,11 @@ export default {
   color: #474747;
   margin-top: 60px;
 }
+
+.or {
+  color: #828282;
+  transform: rotate(90deg);
+  display: inline-block;
+}
+
 </style>
