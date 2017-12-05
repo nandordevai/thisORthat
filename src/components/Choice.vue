@@ -2,13 +2,16 @@
   <div class="choice">
     <input class="choice-name" :placeholder="defaultText" type="text">
     <p class="is">is</p>
-    <input
-      class="advantage"
-      type="text"
-      v-for="advantage of advantages"
-      v-model="advantage.text"
-      :placeholder="advantage.placeholder"
-      @keyup.enter="addEmptyAdvantage">
+    <transition-group name="adv-list">
+      <input
+        class="advantage"
+        type="text"
+        v-for="advantage of advantages"
+        v-model="advantage.text"
+        :key="advantage.id"
+        :placeholder="advantage.placeholder"
+        @keyup.enter="addEmptyAdvantage">
+    </transition-group>
   </div>
 </template>
 
@@ -77,6 +80,16 @@ input:focus {
   border: 0;
   border-bottom: 1px dotted rgb(132, 203, 171);
   margin-bottom: 1rem;
+  display: inline-block;
+}
+
+.adv-list-enter-active, .adv-list-leave-active {
+  transition: all 0.15s;
+}
+
+.adv-list-enter {
+  opacity: 0;
+  transform: translateY(-10px);
 }
 
 </style>
