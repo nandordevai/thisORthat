@@ -33,21 +33,27 @@ export default {
   },
   methods: {
     addEmptyAdvantage () {
-      // run when the user begins to type to the last empty advantage field
+      // TODO: focus new input field
       this.advantages.push({
         id: this.advantages.length,
         text: ''
       })
     },
 
-    // run when the user deletes an advantage and clicks to another field
-    removeEmptyAdvantages () {
-      //
-    },
-
     save () {
       localStorage.setItem(this.defaultText, JSON.stringify(this.advantages))
+    },
+
+    reset () {
+      this.advantages = [
+        {
+          id: 0,
+          text: '',
+          placeholder: this.defaultAdvantage
+        }
+      ]
     }
+
   },
   mounted () {
     this.$nextTick(() => {

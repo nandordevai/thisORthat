@@ -1,11 +1,11 @@
 <template>
   <div class="compare">
-    <a href="#">New comparison</a>
-    <choice
+    <a href="#" @click.prevent="reset">New comparison</a>
+    <choice ref="choiceLeft"
       v-bind:defaultText="'Broccoli'"
       v-bind:defaultAdvantage="'healthy'">
     </choice>
-    <choice
+    <choice ref="choiceRight"
       v-bind:defaultText="'Nutella'"
       v-bind:defaultAdvantage="'delicious'">
     </choice>
@@ -22,6 +22,12 @@ export default {
   },
   components: {
     Choice
+  },
+  methods: {
+    reset () {
+      this.$refs.choiceLeft.reset()
+      this.$refs.choiceRight.reset()
+    }
   }
 }
 </script>
@@ -34,6 +40,9 @@ a {
   display: block;
   margin: 0;
   margin-top: 2rem;
+  color: rgb(132, 203, 171);
+  text-decoration: none;
+  font-weight: 800;
 }
 
 </style>
