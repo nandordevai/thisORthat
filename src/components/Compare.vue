@@ -1,5 +1,6 @@
 <template>
   <div class="compare">
+    <a href="#">New comparison</a>
     <choice
       v-bind:defaultText="'Broccoli'"
       v-bind:defaultAdvantage="'healthy'">
@@ -26,4 +27,13 @@ export default {
 </script>
 
 <style scoped>
+
+a {
+  text-align: center;
+  float: none;
+  display: block;
+  margin: 0;
+  margin-top: 2rem;
+}
+
 </style>

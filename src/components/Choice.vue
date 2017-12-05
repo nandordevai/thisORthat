@@ -10,7 +10,8 @@
         v-model="advantage.text"
         :key="advantage.id"
         :placeholder="advantage.placeholder"
-        @keyup.enter="addEmptyAdvantage">
+        @keyup.enter="addEmptyAdvantage"
+        @keyup="save">
     </transition-group>
   </div>
 </template>
@@ -31,7 +32,7 @@ export default {
     }
   },
   methods: {
-    addEmptyAdvantage: function () {
+    addEmptyAdvantage () {
       // run when the user begins to type to the last empty advantage field
       this.advantages.push({
         id: this.advantages.length,
@@ -40,9 +41,21 @@ export default {
     },
 
     // run when the user deletes an advantage and clicks to another field
-    removeEmptyAdvantages: function () {
+    removeEmptyAdvantages () {
       //
+    },
+
+    save () {
+      localStorage.setItem(this.defaultText, JSON.stringify(this.advantages))
     }
+  },
+  mounted () {
+    this.$nextTick(() => {
+      let savedData = JSON.parse(localStorage.getItem(this.defaultText))
+      if (savedData != null) {
+        this.advantages = savedData
+      }
+    })
   }
 }
 </script>
