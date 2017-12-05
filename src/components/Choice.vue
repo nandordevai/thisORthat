@@ -2,18 +2,17 @@
   <div class="choice">
     <input class="choice-name" :placeholder="defaultText" type="text">
     <p class="is">is</p>
-    <advantage
+    <input
+      class="advantage"
+      type="text"
       v-for="advantage of advantages"
-      v-bind:text="advantage.text"
-      v-bind:key="advantage.id"
-      v-on:advantagechanged="addEmpyAdvantage">
-    </advantage>
+      v-model="advantage.text"
+      :placeholder="advantage.placeholder"
+      @keyup.enter="addEmptyAdvantage">
   </div>
 </template>
 
 <script>
-import Advantage from '@/components/Advantage'
-
 export default {
   props: ['defaultText', 'defaultAdvantage'],
   name: 'Choice',
@@ -22,24 +21,19 @@ export default {
       advantages: [
         {
           id: 0,
-          text: this.defaultAdvantage
+          text: '',
+          placeholder: this.defaultAdvantage
         }
       ]
     }
   },
-  components: {
-    Advantage
-  },
   methods: {
-    addEmpyAdvantage: function () {
-      // console.log(this.advantages)
+    addEmptyAdvantage: function () {
       // run when the user begins to type to the last empty advantage field
-      if (this.advantages.slice(-1)[0].length === 1) {
-        this.advantages.push({
-          id: this.advantages.length,
-          text: ''
-        })
-      }
+      this.advantages.push({
+        id: this.advantages.length,
+        text: ''
+      })
     },
 
     // run when the user deletes an advantage and clicks to another field
@@ -75,6 +69,14 @@ export default {
 
 input:focus {
   outline: none;
+}
+
+.advantage {
+  width: 100%;
+  font-size: 1.5rem;
+  border: 0;
+  border-bottom: 1px dotted rgb(132, 203, 171);
+  margin-bottom: 1rem;
 }
 
 </style>
