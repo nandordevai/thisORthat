@@ -1,6 +1,5 @@
 <template>
   <div class="compare">
-    <a href="#" @click.prevent="reset">New comparison</a>
     <choice ref="choiceLeft"
       v-bind:defaultText="'Broccoli'"
       v-bind:defaultAdvantage="'healthy'">
@@ -9,6 +8,9 @@
       v-bind:defaultText="'Nutella'"
       v-bind:defaultAdvantage="'delicious'">
     </choice>
+    <div class="reset">
+      <a v-show="hasAdvantages" href="#" @click.prevent="reset">New comparison</a>
+    </div>
   </div>
 </template>
 
@@ -18,7 +20,9 @@ import Choice from '@/components/Choice'
 export default {
   name: 'Compare',
   data () {
-    return {}
+    return {
+      hasAdvantages: false
+    }
   },
   components: {
     Choice
@@ -27,21 +31,39 @@ export default {
     reset () {
       this.$refs.choiceLeft.reset()
       this.$refs.choiceRight.reset()
+      this.hasAdvantages = false
+    },
+    isEmpty () {
+      try {
+        return this.$refs.choiceRight.isEmpty() && this.$refs.choiceLeft.isEmpty()
+      } catch (e) {
+        return true
+      }
     }
+  },
+  created () {
+    this.$on('edited', () => {
+      this.hasAdvantages = !this.isEmpty()
+    })
   }
 }
 </script>
 
 <style scoped>
 
-a {
+.reset {
+  display: inline-block;
+  width: 100%;
   text-align: center;
   float: none;
-  display: block;
+}
+
+a {
   margin: 0;
   margin-top: 2rem;
   color: rgb(132, 203, 171);
   text-decoration: none;
+  clear: both;
   font-weight: 800;
 }
 

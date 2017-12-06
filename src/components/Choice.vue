@@ -14,9 +14,10 @@
         type="text"
         v-for="advantage of advantages"
         v-model="advantage.text"
+        :ref="'a' + advantage.id"
         :key="advantage.id"
         :placeholder="advantage.placeholder"
-        @keyup.enter="addEmptyAdvantage"
+        @keyup.enter="addEmptyAdvantage(advantage)"
         @keyup="save">
     </transition-group>
   </div>
@@ -39,12 +40,17 @@ export default {
     }
   },
   methods: {
-    addEmptyAdvantage () {
-      // TODO: focus new input field
-      this.advantages.push({
-        id: this.advantages.length,
-        text: ''
-      })
+    addEmptyAdvantage (actual) {
+      if (actual.id === this.advantages.length - 1) {
+        if (actual.text !== '') {
+          this.advantages.push({
+            id: this.advantages.length,
+            text: ''
+          })
+        }
+      } else {
+        this.$refs['a' + (actual.id + 1)][0].focus()
+      }
     },
 
     save () {
@@ -52,6 +58,7 @@ export default {
         text: this.text,
         advantages: this.advantages
       }))
+      this.$parent.$emit('edited')
     },
 
     reset () {
@@ -63,12 +70,17 @@ export default {
         }
       ]
       this.text = ''
+      this.save()
+    },
+
+    isEmpty () {
+      return this.advantages.every((item) => item.text === '') &&
+        this.text === ''
     }
 
   },
   directives: {
     focus: {
-    // directive definition
       inserted: function (el) {
         el.focus()
       }
